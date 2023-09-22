@@ -1,34 +1,43 @@
-/* 
-1. with a cicle, print the pictures inside items-wrapper y
-2. pick the elements with the class "item" and safe each in array y
-3. take out the hide class on the first element y
-4. when next ( arrow down ) y
-    a. add the class hide to the current element y
-    b. increase the counter y
-    c. remove the class hide to the current new elemnet  y
-5. when prev (4. upside down ) y
-6. hide prev button in item 1 (in bonus conect to the last) y
-7. hide next element at the last class (in bonus conect to the first) y 
-**extra bonus**
-8. add the thumbnails at the left of the image in css using active as previus homeworks
-9.make each picture active when the picture is in use*/
-
-/* elements */
+/* Riprendiamo l’esercizio carosello e rifacciamolo, questa volta usando gli oggetti.
+Alla slide aggiungere un titolo e un testo
+===
+**Bonus 1:**
+Sperimentiamo attraverso l’uso delle timing functions anche una funzionalità di scorrimento al nostro carosello:al click di un bottone o già dall’inizio possiamo far partire, ad intervalli di tempo a piacere, lo scorrimento delle immagini disponibili nel carosello stesso.
+****
+===
+**Bonus 2:**
+E se volessi un bottone per invertire la “direzione” del carosello?
+****
+===
+**Bonus 3:**
+Al click della thumb cambia l’immagine attiva
+****
+=== 
+step by step
+1. create an array objets of each element
+2. usin for-each configure what you want to add show in the html
+3. position relative and absole for the text in css
+4. configure the buttons to change not only the image and the active element, also the text
+bonus
+1. add a timer to change the image each 10 second
+2. add a button 
+3. the button will make the order of the timer upwards
+4. make each thumb a button
+5. when i click a thumb the image change */
+// elements
 const itemsWrapper = document.querySelector('.items-wrapper');
 const smallPicsContainer = document.querySelector('.smallpics');
-/* buttons */
+// buttons
 const btnBottom = document.querySelector('.bottom');
 const btnTop = document.querySelector('.top');
-/* reset */
+// reset
 let counterImg = 0;
-let counterSmall= 0;
-let smallPics = '';
-itemsWrapper.innerHTML = '';
+
 /* images */
 const images = [
   {
       image: 'img/01.webp',
-      title: 'Marvel\'s Spiderman Miles Morale',
+      title: 'Marvel\'s Spiderman Miles Morales',
       text: 'Experience the rise of Miles Morales as the new hero masters incredible, explosive new powers to become his own Spider-Man.',
   }, {
       image: 'img/02.webp',
@@ -48,9 +57,54 @@ const images = [
       text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
   }
 ];
-images.forEach((item) => {
-  console.log(item)
-  itemsWrapper.innerHTML += `<img src="./${item.image}" alt="${item.title}" class="hide">`;;
-  smallPicsContainer.innerHTML +=`<div class="smallpic"><img src="./${item.image}" alt="${item.title}"></div>`;}
-);
 
+
+images.forEach((item, index) => {
+  const slide = document.createElement('div');
+  slide.classList.add('slide', 'hide');
+  
+  slide.innerHTML = `
+    <img src="./${item.image}" alt="${item.title}">
+    <div class="text hide">
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+    </div>
+  `;
+  
+  itemsWrapper.appendChild(slide);
+
+  smallPicsContainer.insertAdjacentHTML('beforeend', `<div class="smallpic"><img src="./${item.image}" alt="${item.title}"></div>`);
+});
+
+function highlightActiveThumbnail() {
+  const thumbnails = smallPicsContainer.querySelectorAll('.smallpic');
+  thumbnails.forEach((thumbnail, index) => {
+    if (index === counterImg) {
+      thumbnail.classList.add('active');
+    } else {
+      thumbnail.classList.remove('active');
+    }
+  });
+}
+
+function showNextImage() {
+  const slides = itemsWrapper.querySelectorAll('.slide');
+  slides[counterImg].classList.add('hide'); 
+  counterImg = (counterImg + 1) % slides.length;
+  slides[counterImg].classList.remove('hide');
+  slides[counterImg].querySelector('.text').classList.remove('hide'); 
+  highlightActiveThumbnail(); 
+}
+function showPreviousImage() {
+  const slides = itemsWrapper.querySelectorAll('.slide');
+  slides[counterImg].classList.add('hide'); 
+  counterImg = (counterImg - 1 + slides.length) % slides.length; 
+  slides[counterImg].classList.remove('hide'); 
+  slides[counterImg].querySelector('.text').classList.remove('hide'); 
+  highlightActiveThumbnail(); 
+}
+
+btnBottom.addEventListener('click', showNextImage);
+btnTop.addEventListener('click', showPreviousImage);
+
+showNextImage();
