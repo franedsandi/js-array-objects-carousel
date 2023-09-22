@@ -32,6 +32,7 @@ const btnBottom = document.querySelector('.bottom');
 const btnTop = document.querySelector('.top');
 // reset
 let counterImg = 0;
+let invertOrder = false;
 
 /* images */
 const images = [
@@ -57,7 +58,6 @@ const images = [
       text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
   }
 ];
-
 
 images.forEach((item, index) => {
   const slide = document.createElement('div');
@@ -99,6 +99,7 @@ function showNextImage() {
   slides[counterImg].querySelector('.text').classList.remove('hide'); 
   highlightActiveThumbnail(); 
 }
+
 function showPreviousImage() {
   const slides = itemsWrapper.querySelectorAll('.slide');
   slides[counterImg].classList.add('hide'); 
@@ -111,8 +112,21 @@ function showPreviousImage() {
 btnBottom.addEventListener('click', showNextImage);
 btnTop.addEventListener('click', showPreviousImage);
 
+function toggleOrder() {
+  invertOrder = !invertOrder;
+}
+
+const invertOrderButton = document.querySelector('.invert-order');
+invertOrderButton.addEventListener('click', toggleOrder);
+
 function autoShowNextImage() {
-  setInterval(showNextImage, 5000); 
+  setInterval(() => {
+    if (invertOrder) {
+      showPreviousImage(); 
+    } else {
+      showNextImage();
+    }
+  }, 5000);
 }
 
 autoShowNextImage();
