@@ -107,4 +107,9 @@ function showPreviousImage() {
 btnBottom.addEventListener('click', showNextImage);
 btnTop.addEventListener('click', showPreviousImage);
 
-showNextImage();
+function autoShowNextImage() {
+  setInterval(showNextImage, 5000); // Llama a showNextImage cada 5000 milisegundos (5 segundos)
+}
+
+// Llamar a la función para iniciar la presentación automática
+autoShowNextImage();
