@@ -40,3 +40,15 @@ const images = [
         text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
     }
 ];
+=== 
+step by step
+1. create an array objets of each element
+2. usin for-each configure what you want to add show in the html
+3. position relative and absole for the text in css
+4. configure the buttons to change not only the image and the active element, also the text
+bonus
+1. add a timer to change the image each 10 second
+2. add a button 
+3. the button will make the order of the timer upwards
+4. make each thumb a button
+5. when i click a thumb the image change */

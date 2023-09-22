@@ -11,6 +11,7 @@
 .main-wrapper {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgb(54, 54, 54);
@@ -19,7 +20,7 @@
 .container {
   width: 60%;
   height: 80vh; /* Cambiado a 100% */
-  margin: 0 auto;
+  margin: 30px auto;
 }
 
 .slider {

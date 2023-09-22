@@ -61,19 +61,23 @@ const images = [
 
 images.forEach((item, index) => {
   const slide = document.createElement('div');
-  slide.classList.add('slide', 'hide');
-  
+  slide.classList.add('slide');
+  if (index !== 0) {
+    slide.classList.add('hide');
+  }
   slide.innerHTML = `
     <img src="./${item.image}" alt="${item.title}">
-    <div class="text hide">
+    <div class="text">
       <h3>${item.title}</h3>
       <p>${item.text}</p>
     </div>
   `;
-  
   itemsWrapper.appendChild(slide);
-
-  smallPicsContainer.insertAdjacentHTML('beforeend', `<div class="smallpic"><img src="./${item.image}" alt="${item.title}"></div>`);
+  const smallpic = 
+  `<div class="smallpic ${index === 0 ? 'active' : ''}">
+  <img src="./${item.image}" alt="${item.title}">
+  </div>`;
+  smallPicsContainer.insertAdjacentHTML('beforeend', smallpic);
 });
 
 function highlightActiveThumbnail() {
@@ -108,8 +112,7 @@ btnBottom.addEventListener('click', showNextImage);
 btnTop.addEventListener('click', showPreviousImage);
 
 function autoShowNextImage() {
-  setInterval(showNextImage, 5000); // Llama a showNextImage cada 5000 milisegundos (5 segundos)
+  setInterval(showNextImage, 5000); 
 }
 
-// Llamar a la función para iniciar la presentación automática
 autoShowNextImage();
